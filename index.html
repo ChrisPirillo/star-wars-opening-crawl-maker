@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars Opening Crawl Generator | Create Your Own Epic Intro</title>
+    <meta name="description" content="Create your own custom Star Wars opening crawl with scrolling text and a starry background. Relive the iconic movie intro with your own story! Perfect for fan films, presentations, or just for fun.">
+    
+    <meta property="og:title" content="Star Wars Opening Crawl Generator | Create Your Own Epic Intro">
+    <meta property="og:description" content="Craft your own iconic Star Wars scrolling text intro! Perfect for fan films, presentations, or just for fun.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pirillo.com/arcade/star-wars-opening-crawl-maker.html">
+    <meta property="og:image" content="https://pirillo.com/arcade/images/star-wars-opening-crawl-maker.png">
+    <meta property="og:image:alt" content="A Star Wars style opening crawl with yellow text on a starry background.">
+    <meta property="og:site_name" content="Chris Pirillo's Arcade">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Star Wars Opening Crawl Generator | Create Your Own Epic Intro">
+    <meta name="twitter:description" content="Craft your own iconic Star Wars scrolling text intro! Perfect for fan films, presentations, or just for fun.">
+    <meta name="twitter:image" content="https://pirillo.com/arcade/images/star-wars-opening-crawl-maker.png">
+    <meta name="twitter:image:alt" content="A Star Wars style opening crawl with yellow text on a starry background.">
+    <meta name="twitter:url" content="https://pirillo.com/arcade/star-wars-opening-crawl-maker.html">
+    <meta name="twitter:site" content="@chrispirillo"> 
+
+    <link rel="canonical" href="https://pirillo.com/arcade/star-wars-opening-crawl-maker.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Orbitron:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Orbitron:wght@400;700&display=swap">
+    </noscript>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Star Wars Opening Crawl Generator",
+      "description": "Create your own custom Star Wars opening crawl with scrolling text and a starry background. Relive the iconic movie intro with your own story! Perfect for fan films, presentations, or just for fun.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any (Web browser)",
+      "url": "https://pirillo.com/arcade/star-wars-opening-crawl-maker.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0" 
+      },
+      "creator": {
+        "@type": "Person", 
+        "name": "Chris Pirillo",
+        "url": "https://pirillo.com"
+      },
+      "keywords": "Star Wars intro maker, custom Star Wars crawl, create opening crawl online, Star Wars text generator, sci-fi movie intro generator, epic text scroller, movie title generator"
+    }
+    </script>
+
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-family: 'Orbitron', sans-serif; 
+            background-color: #000;
+            color: #FFE81F; 
+            overflow: hidden; /* Keep body overflow hidden */
+        }
+
+        #seo-description-content {
+            position: absolute;
+            left: -9999px; /* Hide off-screen, but accessible to crawlers */
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        /* HYPERSPACE BACKGROUND */
+        #hyperspace-background {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000;
+            overflow: hidden;
+            z-index: 0; 
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out; 
+        }
+        .hyperspace-streak {
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1), rgba(255,255,255,0));
+            transform-origin: 0% 50%; 
+            animation: hyperspaceMove var(--duration) linear infinite;
+            animation-delay: var(--delay);
+            height: 2px; 
+            will-change: transform; 
+        }
+        @keyframes hyperspaceMove {
+            0% { 
+                transform: rotate(var(--angle)) scaleX(0) translateX(-50vw); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 1; 
+            }
+            90% { 
+                opacity: 1; 
+            }
+            100% { 
+                transform: rotate(var(--angle)) scaleX(var(--scale)) translateX(50vw); 
+                opacity: 0; 
+            }
+        }
+
+        /* STARRY BACKGROUND */
+        #static-starry-background {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%;
+            height: 200vh; 
+            background-color: #000; 
+            z-index: 10; 
+            opacity: 0; 
+            pointer-events: none;
+            transform: translateY(0vh); 
+            will-change: transform, opacity;
+        }
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 3px rgba(255,255,255,0.8);
+        }
+        @keyframes panUpStars {
+            from { transform: translateY(0vh); } 
+            to   { transform: translateY(-100vh); } 
+        }
+
+        /* INTRO BLUE TEXT */
+        #intro-blue-text-container { 
+            font-family: Arial, Helvetica, sans-serif; 
+            font-weight: normal; 
+            color: #4FC3F7;
+        }
+        #intro-blue-text-sequence-container { 
+            opacity: 0; 
+            z-index: 20; 
+        }
+        @keyframes fadeInOutTextElementOnly { 
+            0% { opacity: 0; } 
+            15% { opacity: 1; }   
+            85% { opacity: 1; }
+            100% { opacity: 0; } 
+        }
+
+        /* MAIN TITLE */
+        #main-title-text-container { 
+            font-family: 'Inter', sans-serif; 
+            font-weight: 900; 
+            color: #000 !important; 
+            -webkit-text-stroke: 4.5px #FFE81F; 
+            text-stroke: 4.5px #FFE81F; 
+            paint-order: stroke fill; 
+            text-align: center;
+            line-height: 0.9em; 
+            text-shadow: none; 
+            text-transform: uppercase; 
+            max-width: 85%; 
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #main-title-text-container span {
+            display: block; 
+        }
+
+        #main-title-sequence-container { 
+            opacity: 0; 
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            z-index: 30;
+            perspective: 1200px; 
+        }
+        
+        @keyframes mainTitleFlyInAndRecede {
+            0% {
+                opacity: 1; 
+                transform: scale(6) translateZ(0px); 
+            }
+            25% { 
+                opacity: 1;
+                transform: scale(1) translateZ(0px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.01) translateZ(-3000px); 
+            }
+        }
+        
+        /* CRAWL TEXT */
+        #crawl-perspective-wrapper {
+            /* perspective is now set by JS */
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 50; 
+            overflow: hidden;
+            mask-image: linear-gradient(to bottom, 
+                transparent 0%,       
+                transparent 25%,      
+                rgba(0,0,0,0.1) 35%,  
+                rgba(0,0,0,0.8) 45%,
+                black 60%,           
+                black 100%           
+            );
+            -webkit-mask-image: linear-gradient(to bottom, 
+                transparent 0%,       
+                transparent 25%,      
+                rgba(0,0,0,0.1) 35%,  
+                rgba(0,0,0,0.8) 45%,
+                black 60%,           
+                black 100%
+            );
+        }
+
+        #crawl-content-wrapper {
+            position: absolute;
+            bottom: 0; left: 50%; 
+            width: 100%; 
+            max-width: 95vw; 
+            transform-origin: 50% 100%; 
+            /* transform is now set by JS */
+            opacity: 1; 
+            z-index: 51;
+        }
+        
+        .crawl-text-content {
+            font-family: 'Inter', sans-serif; 
+            color: #FFE81F; 
+            text-align: justify; 
+            font-size: clamp(2.2rem, 5.5vw, 3.8rem); 
+            line-height: 1.45; 
+            font-weight: 900; 
+            max-width: 100%; 
+            margin: 0 auto; 
+            padding: 20px;
+            padding-bottom: 40vh; 
+            text-shadow: 3px 3px 6px rgba(0,0,0,1);
+        }
+        .crawl-text-content h1, .crawl-text-content h2 { 
+            text-align: center; 
+            margin-bottom: 0.5em; 
+        }
+        .crawl-text-content h1 { 
+            font-size: 1.2em; 
+        }
+        .crawl-text-content h2 { 
+            font-size: 0.9em; 
+            margin-bottom: 0.8em; 
+        }
+        .crawl-text-content p { 
+            margin-bottom: 1.5em; 
+            text-align: justify; 
+        }
+         .crawl-text-content p:last-child {
+            margin-bottom: 0; 
+        }
+
+        /* UTILITY CLASSES */
+        .visually-hidden { 
+            opacity: 0 !important; 
+            pointer-events: none !important; 
+            visibility: hidden !important; 
+        }
+        .d-none {
+            display: none !important;
+        }
+
+        /* FORM STYLING */
+        #app-container { 
+            z-index: 5; 
+            display: flex; /* Ensure flex for centering */
+            align-items: center; /* Vertical centering */
+            justify-content: center; /* Horizontal centering */
+            width: 100%;
+            min-height: 100vh; /* Ensure it takes full viewport height */
+        } 
+        #form-section {
+            background-color: rgba(0,0,0,0.70) !important; 
+            max-height: 90vh; /* Max height for the form */
+            overflow-y: auto; /* Enable vertical scroll if content overflows */
+            padding: 1.5rem; /* sm:p-8 */
+        }
+        /* Custom scrollbar for form-section (optional, but looks nice) */
+        #form-section::-webkit-scrollbar {
+            width: 8px;
+        }
+        #form-section::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+        }
+        #form-section::-webkit-scrollbar-thumb {
+            background: #FFE81F;
+            border-radius: 10px;
+        }
+        #form-section::-webkit-scrollbar-thumb:hover {
+            background: #fff352;
+        }
+
+
+        #form-section label { 
+            font-family: Arial, Helvetica, sans-serif; 
+            color: #4FC3F7; 
+            font-weight: normal; 
+            font-size: 0.875rem; 
+            margin-bottom: 0.5rem; 
+            display: block; 
+        }
+        /* Unified style for all text inputs and textarea in the form */
+        #form-section input[type="text"], 
+        #form-section textarea {
+            font-family: 'Inter', sans-serif; 
+            color: #FFE81F !important; /* Ensure text color is yellow */
+            font-weight: 700; 
+            font-size: 1rem; 
+            line-height: 1.5rem; 
+            background-color: rgba(0,0,0,0.75) !important; /* Ensure background is dark */
+            border: 1px solid #FFE81F;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); 
+            border-radius: 0.375rem; 
+            width: 100%; 
+            padding: 0.5rem 0.75rem; 
+        }
+        /* Styling for autofill states to maintain custom styles */
+        #form-section input[type="text"]:-webkit-autofill,
+        #form-section input[type="text"]:-webkit-autofill:hover, 
+        #form-section input[type="text"]:-webkit-autofill:focus,
+        #form-section textarea:-webkit-autofill,
+        #form-section textarea:-webkit-autofill:hover,
+        #form-section textarea:-webkit-autofill:focus {
+            border: 1px solid #FFE81F;
+            -webkit-text-fill-color: #FFE81F !important; /* Override text color for autofill */
+            -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0.75) inset !important; /* Override background for autofill */
+            transition: background-color 5000s ease-in-out 0s; /* Prevent quick flash */
+            caret-color: #FFE81F !important; /* Ensure caret color is yellow */
+        }
+
+        #form-section textarea { min-height: 150px; }
+        #form-section input[type="text"]:focus, 
+        #form-section textarea:focus {
+            outline: 2px solid #4FC3F7; 
+            box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.5); 
+        }
+        .sw-button {
+            font-family: 'Orbitron', sans-serif; font-weight: 700;
+            background-color: #FFE81F; color: #000;
+            transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease, opacity 0.2s ease-in-out;
+            box-shadow: 0 2px 10px rgba(255, 232, 31, 0.3);
+        }
+        .sw-button:hover { 
+            background-color: #fff352; 
+            box-shadow: 0 4px 15px rgba(255, 232, 31, 0.5);
+        }
+        .sw-button:active { transform: scale(0.98); }
+        
+        #next-episode-button {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50; 
+        }
+        
+        #form-section ::placeholder { 
+            color: #A09040; 
+            opacity: 1; 
+            font-family: 'Inter', sans-serif; 
+            font-weight: 700; 
+            font-size: 1rem; 
+            line-height: 1.5rem; 
+        }
+
+        /* Chris Pirillo Dropdown & Subheader */
+        .form-subheader {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem; 
+            font-weight: 700; /* Bolder for legibility */
+            color: #dfca70; /* Brighter yellow for legibility */
+            text-align: center;
+            margin-top: 0.25rem; 
+            margin-bottom: 1rem; 
+            letter-spacing: 0.025em; /* Slightly wider kerning */
+        }
+        .form-subheader .underline {
+            text-decoration-color: #FFE81F; 
+        }
+        #chrispirillo-dropdown { z-index: 60; } 
+        #chrispirillo-dropdown a { transition: background-color 0.2s ease, color 0.2s ease; }
+
+
+        /* Hidden Settings Panel */
+        #hidden-settings-panel { z-index: 100; } 
+        #hidden-settings-panel input[type="number"] {
+            font-family: 'Inter', sans-serif;
+            color: #FFE81F !important; /* Ensure text color */
+            font-weight: 700;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            background-color: rgba(0,0,0,0.75) !important; /* Ensure background */
+            border: 1px solid #FFE81F;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border-radius: 0.375rem;
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            -moz-appearance: textfield; 
+        }
+        #hidden-settings-panel input[type="number"]::-webkit-outer-spin-button,
+        #hidden-settings-panel input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        #hidden-settings-panel input[type="number"]:focus {
+            outline: 2px solid #4FC3F7;
+            box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.5);
+        }
+        #hidden-settings-panel label {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #4FC3F7;
+            font-weight: normal;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem; 
+            display: block;
+        }
+        #hidden-settings-panel ::placeholder { 
+            color: #A09040; 
+            opacity: 0.7; 
+            font-family: 'Inter', sans-serif; 
+            font-weight: normal; 
+            font-size: 0.9rem; 
+        }
+
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-yellow-400 overflow-hidden">
+    <div id="seo-description-content" aria-hidden="false"> 
+        <h1>Create Your Own Star Wars Inspired Opening Crawl</h1>
+        <p>Relive the magic of the movies with the Star Wars Opening Crawl Generator! This free online tool lets you craft your very own iconic scrolling text intro, just like in the films. Perfect for fan projects, fun presentations, YouTube video intros, party announcements, or simply unleashing your inner storyteller. Enter your episode title, introductory blue text, and the main crawl content to generate a personalized Star Wars experience. Our generator creates a dynamic, animated crawl with a classic starry background, ensuring your message is delivered with epic flair. Easy to use and share, it's the ultimate way to make any announcement or story feel like it's from a galaxy far, far away. Try the Star Wars text generator today and bring your narratives to life!</p>
+        <p>Keywords: Star Wars intro maker, custom Star Wars crawl, create opening crawl online, Star Wars text generator, sci-fi movie intro generator, epic text scroller, movie title generator, fan film tool, presentation intro.</p>
+    </div>
+
+    <div id="hyperspace-background" aria-hidden="true"></div>
+    <div id="static-starry-background" aria-hidden="true"></div>
+
+    <div id="intro-blue-text-sequence-container" class="fixed inset-0 flex items-center justify-center pointer-events-none">
+        <p id="intro-blue-text-container" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center leading-tight px-4"></p>
+    </div>
+
+    <div id="main-title-sequence-container" class="fixed inset-0 pointer-events-none" style="display: flex; align-items: center; justify-content: center;">
+        <h1 id="main-title-text-container" class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[9rem] px-4"></h1> 
+    </div>
+    
+    <main id="app-container" class="relative min-h-screen flex flex-col items-center justify-center p-4 sm:p-6">
+        <section id="form-section" class="w-full max-w-xl rounded-xl shadow-2xl border border-gray-700">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-2 text-yellow-300" style="font-family: 'Orbitron', sans-serif;">Create Your Crawl</h2>
+            <div class="form-subheader"> by Star Wars fan
+                <div class="relative inline-block">
+                    <span id="chrispirillo-link" class="underline cursor-pointer text-yellow-300 hover:text-yellow-100 transition-colors duration-150">@ChrisPirillo</span>
+                    <div id="chrispirillo-dropdown" class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-56 bg-black border border-yellow-400 rounded-md shadow-lg z-50 hidden text-left">
+                        <a href="https://chrispirillo.bio.link/" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-yellow-200 hover:bg-yellow-600 hover:text-black">Follow Chris</a>
+                        <a href="/" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-yellow-200 hover:bg-yellow-600 hover:text-black">Hire Chris</a>
+                        <a href="/" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-yellow-200 hover:bg-yellow-600 hover:text-black">Meet Chris</a>
+                        <a href="https://chrispirillo.substack.com/" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-yellow-200 hover:bg-yellow-600 hover:text-black">Read Chris</a>
+                        <a href="/arcade/" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-yellow-200 hover:bg-yellow-600 hover:text-black">Play with Chris</a>
+                        <a href="https://www.linkedin.com/in/chrispirillo/" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-yellow-200 hover:bg-yellow-600 hover:text-black">Connect with Chris</a>
+                        <a href="https://discord.com/invite/XRBTM8sAMX" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-yellow-200 hover:bg-yellow-600 hover:text-black">Chat with Chris</a>
+                    </div>
+                </div>
+            </div>
+            <form id="crawl-form">
+                <div class="mb-4">
+                    <label for="blueIntroText">Introductory Blue Text:</label>
+                    <input type="text" id="blueIntroText" name="blueIntroText" placeholder="e.g., A long time ago in a galaxy far, far away...." required>
+                </div>
+                <div class="mb-4">
+                    <label for="mainTitle">Main Title (words on new lines):</label>
+                    <input type="text" id="mainTitle" name="mainTitle" placeholder="YOUR EPIC TITLE HERE" required>
+                </div>
+                <div class="mb-4">
+                    <label for="episodeNumber">Episode Number (optional):</label>
+                    <input type="text" id="episodeNumber" name="episodeNumber" placeholder="e.g., Episode X">
+                </div>
+                <div class="mb-4">
+                    <label for="episodeTitle">Episode Title:</label>
+                    <input type="text" id="episodeTitle" name="episodeTitle" placeholder="e.g., THE SEARCH FOR MORE COFFEE" required>
+                </div>
+                <div class="mb-6">
+                    <label for="crawlText">Crawl Body Text (each new line is a new paragraph):</label>
+                    <textarea id="crawlText" name="crawlText" rows="6" placeholder="It is a dark time for the Rebellion..." required></textarea>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="sw-button text-black bg-yellow-400 hover:bg-yellow-300 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline w-full text-lg">
+                        Launch Crawl!
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="crawl-perspective-wrapper" class="pointer-events-none visually-hidden"> 
+        <div id="crawl-content-wrapper"></div>
+    </div>
+    
+    <button id="next-episode-button" class="sw-button py-3 px-6 rounded-lg shadow-lg d-none" style="opacity: 0;"> Next Episode?
+    </button>
+
+    <section id="hidden-settings-panel" class="fixed inset-0 bg-black bg-opacity-95 p-4 sm:p-6 rounded-lg shadow-2xl border border-yellow-500 z-[100] hidden overflow-y-auto">
+        <div class="w-full max-w-2xl mx-auto"> 
+            <h3 class="text-2xl sm:text-3xl font-bold text-center mb-6 text-yellow-300" style="font-family: 'Orbitron', sans-serif;">Advanced Settings</h3>
+            <form id="advanced-settings-form">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                    <div>
+                        <label for="setting-pre-blue-text-delay">Pre-Blue Text Delay (ms):</label>
+                        <input type="number" id="setting-pre-blue-text-delay" name="preBlueTextDelay" placeholder="e.g., 2000">
+                    </div>
+                    <div>
+                        <label for="setting-intro-blue-text-duration">Blue Text Duration (ms):</label>
+                        <input type="number" id="setting-intro-blue-text-duration" name="introBlueTextDuration" placeholder="e.g., 5500">
+                    </div>
+                    <div>
+                        <label for="setting-delay-after-blue-text">Delay After Blue Text (ms):</label>
+                        <input type="number" id="setting-delay-after-blue-text" name="delayAfterBlueText" placeholder="e.g., 2000">
+                    </div>
+                    <div>
+                        <label for="setting-main-title-duration">Main Title Duration (ms):</label>
+                        <input type="number" id="setting-main-title-duration" name="mainTitleDuration" placeholder="e.g., 10000">
+                    </div>
+                    <div>
+                        <label for="setting-crawl-start-offset">Crawl Start Offset (ms) <small>(auto from Title Duration)</small>:</label>
+                        <input type="number" id="setting-crawl-start-offset" name="crawlStartOffset" placeholder="e.g., 2500" disabled>
+                    </div>
+                     <div>
+                        <label for="setting-star-pan-duration">Star Pan Duration (ms):</label>
+                        <input type="number" id="setting-star-pan-duration" name="starPanDuration" placeholder="e.g., 2000">
+                    </div>
+                    <div>
+                        <label for="setting-star-pan-delay-after-crawl">Star Pan Delay After Crawl (ms):</label>
+                        <input type="number" id="setting-star-pan-delay-after-crawl" name="starPanDelayAfterCrawl" placeholder="e.g., 5">
+                    </div>
+                     <div>
+                        <label for="setting-button-appear-buffer">Button Appear Buffer (ms):</label>
+                        <input type="number" id="setting-button-appear-buffer" name="buttonAppearBuffer" placeholder="e.g., 100">
+                    </div>
+                    <div>
+                        <label for="setting-base-crawl-duration">Base Crawl Duration (ms):</label>
+                        <input type="number" id="setting-base-crawl-duration" name="baseCrawlDuration" placeholder="e.g., 30000">
+                    </div>
+                    <div>
+                        <label for="setting-per-char-crawl-duration">Per Char Crawl Duration (ms):</label>
+                        <input type="number" id="setting-per-char-crawl-duration" name="perCharCrawlDuration" placeholder="e.g., 75">
+                    </div>
+                    <div>
+                        <label for="setting-min-crawl-duration">Min Crawl Duration (ms):</label>
+                        <input type="number" id="setting-min-crawl-duration" name="minCrawlDuration" placeholder="e.g., 20000">
+                    </div>
+                    <div>
+                        <label for="setting-max-crawl-duration">Max Crawl Duration (ms):</label>
+                        <input type="number" id="setting-max-crawl-duration" name="maxCrawlDuration" placeholder="e.g., 120000">
+                    </div>
+                    <div>
+                        <label for="setting-crawl-perspective">Crawl Perspective (px):</label>
+                        <input type="number" id="setting-crawl-perspective" name="crawlPerspective" placeholder="e.g., 400">
+                    </div>
+                    <div>
+                        <label for="setting-crawl-rotate-x">Crawl Rotate X (deg):</label>
+                        <input type="number" id="setting-crawl-rotate-x" name="crawlRotateX" placeholder="e.g., 27">
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+                    <button type="button" id="apply-advanced-settings" class="sw-button text-black bg-yellow-400 hover:bg-yellow-300 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto text-lg">
+                        Apply & Close
+                    </button>
+                    <button type="button" id="reset-advanced-settings" class="sw-button text-yellow-400 bg-gray-700 hover:bg-gray-600 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto text-lg">
+                        Reset to Defaults
+                    </button>
+                     <button type="button" id="close-advanced-settings" class="sw-button text-yellow-400 bg-red-700 hover:bg-red-600 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto text-lg mt-2 sm:mt-0">
+                        Close
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("Star Wars Crawl Script - V25 (Styling Fixes)");
+
+            // --- DOM Element References ---
+            const formSection = document.getElementById('form-section');
+            const crawlForm = document.getElementById('crawl-form');
+            
+            const hyperspaceBackground = document.getElementById('hyperspace-background');
+            const staticStarryBackground = document.getElementById('static-starry-background');
+
+            const introBlueTextSequenceContainer = document.getElementById('intro-blue-text-sequence-container');
+            const introBlueTextContainer = document.getElementById('intro-blue-text-container'); 
+            
+            const mainTitleSequenceContainer = document.getElementById('main-title-sequence-container');
+            const mainTitleTextContainer = document.getElementById('main-title-text-container'); 
+            
+            const crawlPerspectiveWrapper = document.getElementById('crawl-perspective-wrapper');
+            const crawlContentWrapper = document.getElementById('crawl-content-wrapper');
+            const nextEpisodeButton = document.getElementById('next-episode-button');
+
+            // --- Animation & Timing Settings ---
+            const defaultSettings = Object.freeze({
+                PRE_BLUE_TEXT_BLACK_SCREEN_DELAY_MS: 2000,
+                INTRO_BLUE_TEXT_DURATION_MS: 5500,
+                DELAY_AFTER_BLUE_TEXT_MS: 2000,
+                MAIN_TITLE_DURATION_MS: 10000,
+                STAR_PAN_DURATION_MS: 2000,
+                STAR_PAN_DELAY_AFTER_CRAWL_FINISH_MS: 5,
+                BUTTON_APPEAR_BUFFER_AFTER_PAN_FINISH_MS: 100,
+                BASE_CRAWL_DURATION_MS: 30000,
+                PER_CHARACTER_CRAWL_DURATION_MS: 75,
+                MIN_CRAWL_DURATION_MS: 20000,
+                MAX_CRAWL_DURATION_MS: 120000,
+                CRAWL_PERSPECTIVE_PX: 400,
+                CRAWL_ROTATE_X_DEG: 27
+            });
+            let settings = { ...defaultSettings }; 
+
+            // --- State Variables ---
+            let currentAnimationTimeoutId = null; 
+            let crawlAnimationRequestId = null;
+            let blueIntroTextValue, mainTitleWordsValue, episodeNumberValue, episodeTitleValue, crawlBodyValue;
+            let calculatedCrawlAnimationDurationMs; 
+
+            // --- Hidden Settings Panel ---
+            const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown'];
+            let konamiIndex = 0;
+            const hiddenSettingsPanel = document.getElementById('hidden-settings-panel');
+            const applyAdvancedSettingsButton = document.getElementById('apply-advanced-settings');
+            const resetAdvancedSettingsButton = document.getElementById('reset-advanced-settings');
+            const closeAdvancedSettingsButton = document.getElementById('close-advanced-settings');
+            
+            const settingInputs = {
+                preBlueTextDelay: document.getElementById('setting-pre-blue-text-delay'),
+                introBlueTextDuration: document.getElementById('setting-intro-blue-text-duration'),
+                delayAfterBlueText: document.getElementById('setting-delay-after-blue-text'),
+                mainTitleDuration: document.getElementById('setting-main-title-duration'),
+                crawlStartOffset: document.getElementById('setting-crawl-start-offset'),
+                starPanDuration: document.getElementById('setting-star-pan-duration'),
+                starPanDelayAfterCrawl: document.getElementById('setting-star-pan-delay-after-crawl'),
+                buttonAppearBuffer: document.getElementById('setting-button-appear-buffer'),
+                baseCrawlDuration: document.getElementById('setting-base-crawl-duration'),
+                perCharCrawlDuration: document.getElementById('setting-per-char-crawl-duration'),
+                minCrawlDuration: document.getElementById('setting-min-crawl-duration'),
+                maxCrawlDuration: document.getElementById('setting-max-crawl-duration'),
+                crawlPerspective: document.getElementById('setting-crawl-perspective'),
+                crawlRotateX: document.getElementById('setting-crawl-rotate-x')
+            };
+
+            function populateSettingsForm() {
+                settingInputs.preBlueTextDelay.value = settings.PRE_BLUE_TEXT_BLACK_SCREEN_DELAY_MS;
+                settingInputs.introBlueTextDuration.value = settings.INTRO_BLUE_TEXT_DURATION_MS;
+                settingInputs.delayAfterBlueText.value = settings.DELAY_AFTER_BLUE_TEXT_MS;
+                settingInputs.mainTitleDuration.value = settings.MAIN_TITLE_DURATION_MS;
+                settingInputs.crawlStartOffset.value = settings.MAIN_TITLE_DURATION_MS * 0.25; 
+                settingInputs.starPanDuration.value = settings.STAR_PAN_DURATION_MS;
+                settingInputs.starPanDelayAfterCrawl.value = settings.STAR_PAN_DELAY_AFTER_CRAWL_FINISH_MS;
+                settingInputs.buttonAppearBuffer.value = settings.BUTTON_APPEAR_BUFFER_AFTER_PAN_FINISH_MS;
+                settingInputs.baseCrawlDuration.value = settings.BASE_CRAWL_DURATION_MS;
+                settingInputs.perCharCrawlDuration.value = settings.PER_CHARACTER_CRAWL_DURATION_MS;
+                settingInputs.minCrawlDuration.value = settings.MIN_CRAWL_DURATION_MS;
+                settingInputs.maxCrawlDuration.value = settings.MAX_CRAWL_DURATION_MS;
+                settingInputs.crawlPerspective.value = settings.CRAWL_PERSPECTIVE_PX;
+                settingInputs.crawlRotateX.value = settings.CRAWL_ROTATE_X_DEG;
+            }
+            
+            if (settingInputs.mainTitleDuration && settingInputs.crawlStartOffset) {
+                 settingInputs.mainTitleDuration.addEventListener('input', () => {
+                    const newMainTitleDuration = parseInt(settingInputs.mainTitleDuration.value, 10);
+                    if (!isNaN(newMainTitleDuration) && newMainTitleDuration > 0) {
+                        settingInputs.crawlStartOffset.value = newMainTitleDuration * 0.25;
+                    } else {
+                         settingInputs.crawlStartOffset.value = defaultSettings.MAIN_TITLE_DURATION_MS * 0.25; 
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (hiddenSettingsPanel.classList.contains('hidden') && formSection.style.display !== 'none') { 
+                    if (e.key === konamiCode[konamiIndex]) {
+                        konamiIndex++;
+                        if (konamiIndex === konamiCode.length) {
+                            hiddenSettingsPanel.classList.remove('hidden');
+                            populateSettingsForm(); 
+                            konamiIndex = 0; 
+                        }
+                    } else {
+                        konamiIndex = 0; 
+                    }
+                } else if (!hiddenSettingsPanel.classList.contains('hidden') && e.key === 'Escape') { 
+                    hiddenSettingsPanel.classList.add('hidden');
+                    konamiIndex = 0;
+                }
+            });
+
+            applyAdvancedSettingsButton.addEventListener('click', () => {
+                settings.PRE_BLUE_TEXT_BLACK_SCREEN_DELAY_MS = parseInt(settingInputs.preBlueTextDelay.value, 10) || defaultSettings.PRE_BLUE_TEXT_BLACK_SCREEN_DELAY_MS;
+                settings.INTRO_BLUE_TEXT_DURATION_MS = parseInt(settingInputs.introBlueTextDuration.value, 10) || defaultSettings.INTRO_BLUE_TEXT_DURATION_MS;
+                settings.DELAY_AFTER_BLUE_TEXT_MS = parseInt(settingInputs.delayAfterBlueText.value, 10) || defaultSettings.DELAY_AFTER_BLUE_TEXT_MS;
+                settings.MAIN_TITLE_DURATION_MS = parseInt(settingInputs.mainTitleDuration.value, 10) || defaultSettings.MAIN_TITLE_DURATION_MS;
+                settings.STAR_PAN_DURATION_MS = parseInt(settingInputs.starPanDuration.value, 10) || defaultSettings.STAR_PAN_DURATION_MS;
+                settings.STAR_PAN_DELAY_AFTER_CRAWL_FINISH_MS = parseInt(settingInputs.starPanDelayAfterCrawl.value, 10) || defaultSettings.STAR_PAN_DELAY_AFTER_CRAWL_FINISH_MS;
+                settings.BUTTON_APPEAR_BUFFER_AFTER_PAN_FINISH_MS = parseInt(settingInputs.buttonAppearBuffer.value, 10) || defaultSettings.BUTTON_APPEAR_BUFFER_AFTER_PAN_FINISH_MS;
+                settings.BASE_CRAWL_DURATION_MS = parseInt(settingInputs.baseCrawlDuration.value, 10) || defaultSettings.BASE_CRAWL_DURATION_MS;
+                settings.PER_CHARACTER_CRAWL_DURATION_MS = parseInt(settingInputs.perCharCrawlDuration.value, 10) || defaultSettings.PER_CHARACTER_CRAWL_DURATION_MS;
+                settings.MIN_CRAWL_DURATION_MS = parseInt(settingInputs.minCrawlDuration.value, 10) || defaultSettings.MIN_CRAWL_DURATION_MS;
+                settings.MAX_CRAWL_DURATION_MS = parseInt(settingInputs.maxCrawlDuration.value, 10) || defaultSettings.MAX_CRAWL_DURATION_MS;
+                settings.CRAWL_PERSPECTIVE_PX = parseInt(settingInputs.crawlPerspective.value, 10) || defaultSettings.CRAWL_PERSPECTIVE_PX;
+                settings.CRAWL_ROTATE_X_DEG = parseInt(settingInputs.crawlRotateX.value, 10) || defaultSettings.CRAWL_ROTATE_X_DEG;
+
+                crawlPerspectiveWrapper.style.perspective = `${settings.CRAWL_PERSPECTIVE_PX}px`;
+                
+                hiddenSettingsPanel.classList.add('hidden');
+                konamiIndex = 0;
+                console.log("Advanced settings applied:", settings);
+            });
+
+            resetAdvancedSettingsButton.addEventListener('click', () => {
+                settings = { ...defaultSettings };
+                populateSettingsForm();
+                crawlPerspectiveWrapper.style.perspective = `${settings.CRAWL_PERSPECTIVE_PX}px`; 
+                console.log("Advanced settings reset to defaults:", settings);
+            });
+            
+            closeAdvancedSettingsButton.addEventListener('click', () => {
+                hiddenSettingsPanel.classList.add('hidden');
+                konamiIndex = 0;
+            });
+
+            // --- Chris Pirillo Dropdown ---
+            const chrispirilloLink = document.getElementById('chrispirillo-link');
+            const chrispirilloDropdown = document.getElementById('chrispirillo-dropdown');
+            let dropdownTimeout;
+
+            if (chrispirilloLink && chrispirilloDropdown) {
+                const showDropdown = () => {
+                    clearTimeout(dropdownTimeout);
+                    chrispirilloDropdown.classList.remove('hidden');
+                };
+                const hideDropdown = (delay = 200) => {
+                    dropdownTimeout = setTimeout(() => {
+                        chrispirilloDropdown.classList.add('hidden');
+                    }, delay);
+                };
+
+                chrispirilloLink.addEventListener('mouseenter', showDropdown);
+                chrispirilloLink.addEventListener('focus', showDropdown); 
+                chrispirilloLink.addEventListener('mouseleave', () => hideDropdown());
+                chrispirilloLink.addEventListener('blur', () => hideDropdown(0)); 
+
+                chrispirilloDropdown.addEventListener('mouseenter', showDropdown);
+                chrispirilloDropdown.addEventListener('mouseleave', () => hideDropdown());
+                
+                document.addEventListener('click', (event) => {
+                    if (!chrispirilloLink.contains(event.target) && !chrispirilloDropdown.contains(event.target)) {
+                        chrispirilloDropdown.classList.add('hidden');
+                    }
+                });
+                chrispirilloDropdown.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        chrispirilloDropdown.classList.add('hidden');
+                        chrispirilloLink.focus(); 
+                    }
+                });
+            }
+
+            // --- Core Animation Functions ---
+            function createHyperspaceStreaks(numStreaks = 220) { 
+                if (!hyperspaceBackground) return;
+                hyperspaceBackground.innerHTML = ''; 
+                for (let i = 0; i < numStreaks; i++) {
+                    const streak = document.createElement('div');
+                    streak.className = 'hyperspace-streak';
+                    const angle = (Math.random() - 0.5) * 60;
+                    const duration = 0.8 + Math.random() * 1.2; 
+                    const delay = Math.random() * duration; 
+                    const scale = 50 + Math.random() * 100; 
+                    const thickness = 1 + Math.random() * 3;
+
+                    streak.style.setProperty('--angle', `${angle}deg`);
+                    streak.style.setProperty('--duration', `${duration}s`);
+                    streak.style.setProperty('--delay', `-${delay}s`);
+                    streak.style.setProperty('--scale', scale);
+                    streak.style.width = `${thickness}px`;
+                    hyperspaceBackground.appendChild(streak);
+                }
+            }
+
+            function createStarfield() {
+                if (!staticStarryBackground) return;
+                staticStarryBackground.innerHTML = '';
+                const numStars = 400; 
+                for (let i = 0; i < numStars; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    const x = Math.random() * 100; 
+                    const y = Math.random() * 200; 
+                    const size = Math.random() * 2.5 + 1;
+                    const brightness = Math.random() * 0.8 + 0.2;
+                    let color = `rgba(255, 255, 255, ${brightness})`;
+                    if (Math.random() < 0.1) color = `rgba(255, 220, 180, ${brightness})`;
+                    else if (Math.random() < 0.2) color = `rgba(180, 220, 255, ${brightness})`;
+                    star.style.left = `${x}%`;
+                    star.style.top = `${y}%`; 
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.backgroundColor = color;
+                    staticStarryBackground.appendChild(star);
+                }
+            }
+
+            function hideElementOpacity(element) { 
+                if (!element) return;
+                element.style.opacity = '0';
+            }
+            
+            function showElementInstantly(element) {
+                if (!element) return;
+                element.style.animation = 'none'; 
+                element.style.opacity = '1';
+            }
+
+            function showElementWithAnimation(element, animationName, durationInSeconds) {
+                if (!element) return;
+                element.style.animation = 'none'; 
+                element.style.opacity = '1'; 
+                void element.offsetWidth; 
+                requestAnimationFrame(() => { 
+                    element.style.animation = `${animationName} ${durationInSeconds}s forwards`;
+                });
+            }
+
+            function resetSequence() {
+                if (currentAnimationTimeoutId) clearTimeout(currentAnimationTimeoutId);
+                if (crawlAnimationRequestId) cancelAnimationFrame(crawlAnimationRequestId);
+                currentAnimationTimeoutId = null;
+                crawlAnimationRequestId = null;
+
+                formSection.style.display = 'none'; 
+                hyperspaceBackground.style.transition = ''; 
+                hideElementOpacity(hyperspaceBackground); 
+                
+                staticStarryBackground.style.opacity = '0';
+                staticStarryBackground.style.animation = ''; 
+                staticStarryBackground.style.transform = 'translateY(0vh)'; 
+                
+                hideElementOpacity(introBlueTextSequenceContainer); 
+                introBlueTextSequenceContainer.style.animation = 'none';
+                hideElementOpacity(mainTitleSequenceContainer); 
+                mainTitleSequenceContainer.style.animation = 'none';
+                
+                crawlPerspectiveWrapper.classList.remove('visually-hidden'); 
+                crawlContentWrapper.style.transform = `translateX(-50%) rotateX(${settings.CRAWL_ROTATE_X_DEG}deg) translateY(100%)`; 
+                crawlContentWrapper.style.opacity = '0'; 
+                
+                nextEpisodeButton.classList.add('d-none');
+                nextEpisodeButton.style.opacity = '0'; 
+                
+                introBlueTextContainer.innerHTML = '';
+                mainTitleTextContainer.innerHTML = '';
+                crawlContentWrapper.innerHTML = '';
+                console.log("Sequence reset.");
+            }
+
+            function startBlueText() {
+                console.log("Step 1: Blue intro text");
+                introBlueTextContainer.innerHTML = blueIntroTextValue;
+                showElementWithAnimation(
+                    introBlueTextSequenceContainer, 
+                    'fadeInOutTextElementOnly', 
+                    settings.INTRO_BLUE_TEXT_DURATION_MS / 1000
+                );
+                currentAnimationTimeoutId = setTimeout(startMainTitleAndStars, settings.INTRO_BLUE_TEXT_DURATION_MS + settings.DELAY_AFTER_BLUE_TEXT_MS);
+            }
+
+            function startMainTitleAndStars() {
+                console.log("Step 2: Main title and stars");
+                createStarfield(); 
+                showElementInstantly(staticStarryBackground); 
+                
+                const titleHTML = mainTitleWordsValue.map(word => `<span>${word}</span>`).join('');
+                mainTitleTextContainer.innerHTML = titleHTML;
+                showElementWithAnimation(
+                    mainTitleSequenceContainer, 
+                    'mainTitleFlyInAndRecede', 
+                    settings.MAIN_TITLE_DURATION_MS / 1000 
+                );
+                const crawlStartOffsetMs = settings.MAIN_TITLE_DURATION_MS * 0.25; 
+                currentAnimationTimeoutId = setTimeout(startCrawlSequence, crawlStartOffsetMs);
+            }
+
+            function startCrawlSequence() {
+                console.log("Step 3: Starting Star Wars crawl");
+                crawlPerspectiveWrapper.classList.remove('visually-hidden'); 
+                crawlContentWrapper.style.opacity = '1'; 
+                crawlContentWrapper.style.transform = `translateX(-50%) rotateX(${settings.CRAWL_ROTATE_X_DEG}deg) translateY(100%)`; 
+
+                const crawlHTML = `
+                    <div class="crawl-text-content">
+                        ${episodeNumberValue ? `<h2>${episodeNumberValue.toUpperCase()}</h2>` : ''}
+                        <h1>${episodeTitleValue}</h1> 
+                        ${crawlBodyValue.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('')}
+                    </div>
+                `;
+                crawlContentWrapper.innerHTML = crawlHTML;
+                
+                currentAnimationTimeoutId = setTimeout(() => { 
+                    console.log(`Starting Star Wars 3D crawl animation with duration: ${calculatedCrawlAnimationDurationMs}ms`);
+                    let startY = 100; 
+                    let endY = -110;  
+                    let duration = calculatedCrawlAnimationDurationMs; 
+                    let startTime = null;
+                    
+                    function animateStep(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        const elapsed = timestamp - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const currentY = startY + (endY - startY) * progress;
+                        crawlContentWrapper.style.transform = `translateX(-50%) rotateX(${settings.CRAWL_ROTATE_X_DEG}deg) translateY(${currentY}%)`;
+                        
+                        if (progress < 1) {
+                            crawlAnimationRequestId = requestAnimationFrame(animateStep);
+                        } else {
+                            console.log("Star Wars crawl animation complete!");
+                            crawlAnimationRequestId = null;
+                            startStarPanAndButtonAfterCrawl(); 
+                        }
+                    }
+                    crawlAnimationRequestId = requestAnimationFrame(animateStep);
+                }, 100); 
+            }
+
+            function startStarPanAndButtonAfterCrawl() {
+                currentAnimationTimeoutId = setTimeout(() => { 
+                    console.log("Step 4: Star pan initiating...");
+                    staticStarryBackground.style.opacity = '1'; 
+                    staticStarryBackground.style.animation = `panUpStars ${settings.STAR_PAN_DURATION_MS / 1000}s ease-in-out forwards`;
+                                        
+                    currentAnimationTimeoutId = setTimeout(() => {
+                        console.log("Step 5: Star pan duration elapsed. Showing next episode button.");
+                        nextEpisodeButton.classList.remove('d-none'); 
+                        void nextEpisodeButton.offsetWidth; 
+                        requestAnimationFrame(() => { 
+                            nextEpisodeButton.style.opacity = '1'; 
+                            console.log("Next episode button fading in.");
+                        });
+                    }, settings.STAR_PAN_DURATION_MS + settings.BUTTON_APPEAR_BUFFER_AFTER_PAN_FINISH_MS);
+
+                }, settings.STAR_PAN_DELAY_AFTER_CRAWL_FINISH_MS);
+            }
+
+            crawlForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                console.log("=== STARTING STAR WARS SEQUENCE (V25) ===");
+                
+                blueIntroTextValue = document.getElementById('blueIntroText').value.trim(); 
+                mainTitleWordsValue = document.getElementById('mainTitle').value.trim().toUpperCase().split(/\s+/); 
+                episodeNumberValue = document.getElementById('episodeNumber').value.trim(); 
+                episodeTitleValue = document.getElementById('episodeTitle').value.trim().toUpperCase(); 
+                crawlBodyValue = document.getElementById('crawlText').value.trim(); 
+
+                const textLength = crawlBodyValue.replace(/\s/g, '').length; 
+                calculatedCrawlAnimationDurationMs = settings.BASE_CRAWL_DURATION_MS + (textLength * settings.PER_CHARACTER_CRAWL_DURATION_MS);
+                calculatedCrawlAnimationDurationMs = Math.max(calculatedCrawlAnimationDurationMs, settings.MIN_CRAWL_DURATION_MS);
+                calculatedCrawlAnimationDurationMs = Math.min(calculatedCrawlAnimationDurationMs, settings.MAX_CRAWL_DURATION_MS);
+                console.log(`Calculated crawl duration: ${calculatedCrawlAnimationDurationMs}ms for ${textLength} characters using settings.`);
+
+                resetSequence(); 
+                formSection.style.display = 'none'; 
+                hyperspaceBackground.style.transition = 'none'; 
+                hyperspaceBackground.style.opacity = '0';     
+                requestAnimationFrame(() => { 
+                    hyperspaceBackground.style.transition = ''; 
+                });
+                currentAnimationTimeoutId = setTimeout(startBlueText, settings.PRE_BLUE_TEXT_BLACK_SCREEN_DELAY_MS);
+            });
+
+            nextEpisodeButton.addEventListener('click', () => {
+                resetSequence(); 
+                formSection.style.display = ''; 
+                showElementInstantly(hyperspaceBackground); 
+                createHyperspaceStreaks(); 
+                initializePageVisuals(); 
+            });
+            
+            function initializePageVisuals() { 
+                staticStarryBackground.style.opacity = '0';
+                staticStarryBackground.style.animation = ''; 
+                staticStarryBackground.style.transform = 'translateY(0vh)'; 
+
+                crawlPerspectiveWrapper.classList.remove('visually-hidden'); 
+                crawlPerspectiveWrapper.style.perspective = `${settings.CRAWL_PERSPECTIVE_PX}px`;
+                
+                nextEpisodeButton.classList.add('d-none');
+                nextEpisodeButton.style.opacity = '0';
+                
+                introBlueTextSequenceContainer.style.opacity = '0';
+                introBlueTextSequenceContainer.style.animation = 'none';
+                mainTitleSequenceContainer.style.opacity = '0';
+                mainTitleSequenceContainer.style.animation = 'none';
+                crawlContentWrapper.style.opacity = '0'; 
+                crawlContentWrapper.style.transform = `translateX(-50%) rotateX(${settings.CRAWL_ROTATE_X_DEG}deg) translateY(100%)`; 
+            }
+
+            function initializePage() {
+                formSection.style.display = ''; 
+                showElementInstantly(hyperspaceBackground); 
+                createHyperspaceStreaks();
+                initializePageVisuals(); 
+                console.log("Page initialized with current settings (V25).");
+            }
+
+            initializePage(); 
+        });
+    </script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1CQ4D3VQ3L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1CQ4D3VQ3L');
+</script>
+
+</body>
+</html>
