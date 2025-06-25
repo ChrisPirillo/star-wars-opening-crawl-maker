@@ -7,4 +7,6 @@ Create your own custom Star Wars opening crawl with scrolling text and a starry 
 
 ![Screenshot](https://github.com/ChrisPirillo/star-wars-opening-crawl-maker/blob/main/assets/screenshot.png?raw=true)
 
+![Screenshot](https://raw.githubusercontent.com/ChrisPirillo/star-wars-opening-crawl-maker/main/assets/screenshot.png)
+
 * Try it now: [https://pirillo.com/arcade/star-wars-opening-crawl-maker.html](https://pirillo.com/arcade/star-wars-opening-crawl-maker.html)
